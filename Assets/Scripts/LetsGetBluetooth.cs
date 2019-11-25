@@ -27,20 +27,25 @@ public class LetsGetBluetooth : MonoBehaviour {
 
     public void connect()
     {
-        statusText.text = "STATUS: CONNECTING...";
+        statusText.text = "CONNECTING...";
 
         device.connect();
+
+        if (device != null)
+            statusText.text = "CONNECTED";
     }
 
     public void disconnect()
     {
+        statusText.text = "DISCONNECTING...";
         device.close();
+        statusText.text = "DISCONNECTED";
     }
 
-    public void startTransmission()
+    public void requestData()
     {
         if (device != null)
-            device.send(System.Text.Encoding.ASCII.GetBytes("Start\n"));
+            device.send(System.Text.Encoding.ASCII.GetBytes("Send me data\n"));
     }
 	
 	// Update is called once per frame
@@ -51,13 +56,13 @@ public class LetsGetBluetooth : MonoBehaviour {
 
             if (msg != null)
             {
-                statusText.text = "MSG RECEIVED: " + msg[0].ToString() + msg[1].ToString() + msg[2].ToString();
+                statusText.text = "MSG RECEIVED: " + msg[1].ToString() + msg[2].ToString() + msg[3].ToString();
                 //statusText.text = "MSG RECEIVED: " + foreach (byte item in msg) {item.ToString()};
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
-                messageZero.text = msg[0].ToString();
+                //messageZero.text = msg[0].ToString(); // start byte 255
                 messageOne.text = msg[1].ToString();
                 messageTwo.text = msg[2].ToString();
-                //messageThree.text = msg[3].ToString();
+                messageThree.text = msg[3].ToString();
                 //messageFour.text = msg[4].ToString();
             }
         }
