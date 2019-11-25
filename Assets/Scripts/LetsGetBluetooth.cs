@@ -32,6 +32,7 @@ public class LetsGetBluetooth : MonoBehaviour {
     public TextMeshProUGUI testPointText1;
     public TextMeshProUGUI testPointText2;
     public TextMeshProUGUI testPointText3;
+    public TextMeshProUGUI testPointText4;
 
     void Awake()
     {
@@ -43,7 +44,7 @@ public class LetsGetBluetooth : MonoBehaviour {
 
     void Start()
     {
-        fileName = "bikingProgramData.txt";
+        fileName = "/bikingProgramData2.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
@@ -69,16 +70,23 @@ public class LetsGetBluetooth : MonoBehaviour {
         // Save data from dynamic array to persistentDataPath
         string[][] output = new string[rowData.Count][]; // init 2D array to convert to csv
 
+        testPointText1.text = rowData.Count.ToString();
+
         for (int i = 0; i < output.Length; i++)
+        {
             output[i] = rowData[i];
+            testPointText1.text = "Wrote " + rowData[i][i] + " to output: " + output[i][i];
+        }
 
         int length = output.GetLength(0);
         StringBuilder sb = new StringBuilder();
 
+        testPointText2.text = length.ToString();
+
         for (int index = 0; index < length; index++)
             sb.AppendLine(string.Join(delimiter, output[index]));
 
-        filePath = Application.persistentDataPath + "savedBikingProgramData.csv";
+        filePath = Application.persistentDataPath + fileName;
 
         StreamWriter outStream = File.CreateText(filePath);
         outStream.WriteLine(sb);
@@ -97,7 +105,7 @@ public class LetsGetBluetooth : MonoBehaviour {
 
         // Close app
         device.close();
-        statusText.text = "DISCONNECTED";
+        statusText.text = "DISCONNECTED, FILE SAVED";
     }
 
     public void requestData()
@@ -133,6 +141,13 @@ public class LetsGetBluetooth : MonoBehaviour {
                     rowDataTemp[i] = msg[i].ToString();
                 }
                 rowData.Add(rowDataTemp);
+
+                testPointText3.text = "Added " + rowDataTemp[1] + rowDataTemp[2] + rowDataTemp[3];
+
+                foreach (string[] item in rowData)
+                    foreach (string subItem in item)
+                        testPointText4.text = subItem;
+
             }
         }
 	}
