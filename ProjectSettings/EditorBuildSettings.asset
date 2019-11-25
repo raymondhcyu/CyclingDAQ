@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/InApplication.unity
     guid: 97af13f1797dd7546a8295ac541ab294
-  - enabled: 1
+  - enabled: 0
     path: Assets/BT_Library/Demos/Basic Demo/BasicDemo.unity
     guid: 7b3aa303831fb41fea738959d2ee31b9
   m_configObjects: {}

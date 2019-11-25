@@ -67,6 +67,7 @@
      <Compile Include="Assets\BT_Library\Scripts\ScrollTerminalUI.cs" />
      <Compile Include="Assets\mainMenu.cs" />
      <Compile Include="Assets\Scripts\LetsGetBluetooth.cs" />
+     <Compile Include="Assets\Scripts\SystemScripts.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
