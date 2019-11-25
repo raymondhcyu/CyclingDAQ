@@ -75,13 +75,13 @@ public class LetsGetBluetooth : MonoBehaviour {
         for (int i = 0; i < output.Length; i++)
         {
             output[i] = rowData[i];
-            testPointText1.text = "Wrote " + rowData[i][i] + " to output: " + output[i][i];
+            //testPointText1.text = "Wrote " + rowData[i][i] + " to output: " + output[i][i];
         }
 
         int length = output.GetLength(0);
         StringBuilder sb = new StringBuilder();
 
-        testPointText2.text = length.ToString();
+        //testPointText2.text = length.ToString();
 
         for (int index = 0; index < length; index++)
             sb.AppendLine(string.Join(delimiter, output[index]));
@@ -105,7 +105,7 @@ public class LetsGetBluetooth : MonoBehaviour {
 
         // Close app
         device.close();
-        statusText.text = "DISCONNECTED, FILE SAVED";
+        statusText.text = "DISCONNECTED";
     }
 
     public void requestData()
