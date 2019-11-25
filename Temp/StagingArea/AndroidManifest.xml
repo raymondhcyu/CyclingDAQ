@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.QuaternionInc.CyclingDAQ" xmlns:tools="http://schemas.android.com/tools" android:versionName="0.2" android:versionCode="1" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.QuaternionInc.CyclingDAQ" xmlns:tools="http://schemas.android.com/tools" android:versionName="0.3" android:versionCode="1" android:installLocation="preferExternal">
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <!--Permissions added by the BT library-->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,7 +17,7 @@
     <!--Activity added by the BT library-->
     <activity android:name="com.techtweaking.bluetoothcontroller.ForwardingActivity" android:background="#00000000">
     </activity>
-    <meta-data android:name="unity.build-id" android:value="97b846af-f70e-4ebb-ab40-d78991d9eded" />
+    <meta-data android:name="unity.build-id" android:value="5895a17a-fec9-4ee2-8cd8-0426de88f09f" />
     <meta-data android:name="unity.splash-mode" android:value="0" />
     <meta-data android:name="unity.splash-enable" android:value="True" />
   </application>

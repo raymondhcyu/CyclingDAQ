@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.QuaternionInc.CyclingDAQ" xmlns:tools="http://schemas.android.com/tools" android:installLocation="preferExternal" android:versionName="0.2" android:versionCode="1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.QuaternionInc.CyclingDAQ" xmlns:tools="http://schemas.android.com/tools" android:installLocation="preferExternal" android:versionName="0.3" android:versionCode="1">
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <!--Permissions added by the BT library-->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
