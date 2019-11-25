@@ -6,14 +6,20 @@ using UnityEngine.UI;
 using TechTweaking.Bluetooth;
 using TMPro;
 
+using System;
 using System.IO;
+using System.Text;
 
 public class LetsGetBluetooth : MonoBehaviour {
 
     private BluetoothDevice device;
     private string fileName;
-    private List<int> data1 = new List<int>(); // dynamic array
+    private List<string[]> rowData = new List<string[]>(); // dynamic array; https://sushanta1991.blogspot.com/2015/02/how-to-write-data-to-csv-file-in-unity.html 
+    private const int rowDataSize = 4; // change to match data size
+    private string[] rowDataTemp = new string[rowDataSize]; // temp array for writing
     // Implement try catch for out of memory? https://docs.microsoft.com/en-us/dotnet/api/system.outofmemoryexception?view=netframework-4.8
+    private string delimiter = ",";
+    private string filePath = "";
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -33,32 +39,63 @@ public class LetsGetBluetooth : MonoBehaviour {
 
         device = new BluetoothDevice();
         device.Name = "ESP32test";
+    }
 
+    void Start()
+    {
         fileName = "bikingProgramData.txt";
+
+        // Init titles of CSV
+        rowDataTemp = new string[rowDataSize];
+        rowDataTemp[0] = "Title0";
+        rowDataTemp[1] = "Title1";
+        rowDataTemp[2] = "Title2";
+        rowDataTemp[3] = "Title3";
+        rowData.Add(rowDataTemp);
     }
 
     public void connect()
     {
         statusText.text = "CONNECTING...";
-
         device.connect();
-
         if (device != null)
             statusText.text = "CONNECTED";
     }
 
     public void disconnect()
     {
+        statusText.text = "DISCONNECTING...";
+
         // Save data from dynamic array to persistentDataPath
-        List<string> data1String = data1.ConvertAll<string>(x => x.ToString()); // convert from int to string
+        string[][] output = new string[rowData.Count][]; // init 2D array to convert to csv
+
+        for (int i = 0; i < output.Length; i++)
+            output[i] = rowData[i];
+
+        int length = output.GetLength(0);
+        StringBuilder sb = new StringBuilder();
+
+        for (int index = 0; index < length; index++)
+            sb.AppendLine(string.Join(delimiter, output[index]));
+
+        filePath = Application.persistentDataPath + "savedBikingProgramData.csv";
+
+        StreamWriter outStream = File.CreateText(filePath);
+        outStream.WriteLine(sb);
+        outStream.Close();
+
+        {
+        /* 
+        List<string> data1String = rowData.ConvertAll<string>(x => x.ToString()); // convert from int/float to string
         testPointText1.text = "1";
-        string[] data1StringArray = data1String.ToArray(); // convert from string list to string array
+        string[] data1StringArray = rowData.ToArray(); // convert from string list to string array
         testPointText1.text = "2";
         File.WriteAllLines(Application.persistentDataPath + "/" + fileName, data1StringArray);
         testPointText1.text = "3";
+        */
+        }
 
         // Close app
-        statusText.text = "DISCONNECTING...";
         device.close();
         statusText.text = "DISCONNECTED";
     }
@@ -87,8 +124,15 @@ public class LetsGetBluetooth : MonoBehaviour {
                 messageThree.text = msg[3].ToString();
                 //messageFour.text = msg[4].ToString();
 
+                // Add calibration algorithms here?
+
                 // Log data to dynamic array
-                data1.Add(msg[1]);
+                rowDataTemp = new string[rowDataSize];
+                for (int i = 1; i < rowDataSize; i++)
+                {
+                    rowDataTemp[i] = msg[i].ToString();
+                }
+                rowData.Add(rowDataTemp);
             }
         }
 	}
