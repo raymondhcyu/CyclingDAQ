@@ -54,7 +54,7 @@ public class LetsGetBluetooth : MonoBehaviour {
         {
             byte[] msg = device.read();
 
-            if (msg != null)
+            if ((msg != null) && (msg[0] == 255))
             {
                 statusText.text = "MSG RECEIVED: " + msg[1].ToString() + msg[2].ToString() + msg[3].ToString();
                 //statusText.text = "MSG RECEIVED: " + foreach (byte item in msg) {item.ToString()};
