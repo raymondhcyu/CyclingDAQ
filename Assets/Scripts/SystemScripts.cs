@@ -6,7 +6,7 @@ public class SystemScripts : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Screen.orientation = ScreenOrientation.Landscape;
+        Screen.orientation = ScreenOrientation.LandscapeRight;
     }
 	
     public void exitApp ()
