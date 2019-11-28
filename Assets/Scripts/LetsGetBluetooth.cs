@@ -10,7 +10,8 @@ using System;
 using System.IO;
 using System.Text;
 
-public class LetsGetBluetooth : MonoBehaviour {
+public class LetsGetBluetooth : MonoBehaviour
+{
 
     private BluetoothDevice device;
     private string fileName;
@@ -32,7 +33,6 @@ public class LetsGetBluetooth : MonoBehaviour {
     public TextMeshProUGUI testPointText1;
     public TextMeshProUGUI testPointText2;
     public TextMeshProUGUI testPointText3;
-    public TextMeshProUGUI testPointText4;
 
     void Awake()
     {
@@ -44,20 +44,20 @@ public class LetsGetBluetooth : MonoBehaviour {
 
     void Start()
     {
-        fileName = "/bikingProgramData3.txt";
+        // Change to have timestamp
+        fileName = "/bikingProgramData44.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
-        rowDataTemp[0] = "Title0";
-        rowDataTemp[1] = "Title1";
-        rowDataTemp[2] = "Title2";
-        rowDataTemp[3] = "Title3";
+        rowDataTemp[0] = "Time";
+        rowDataTemp[1] = "xAcc";
+        rowDataTemp[2] = "yAcc";
+        rowDataTemp[3] = "zAcc";
         rowData.Add(rowDataTemp);
     }
 
     public void connect()
     {
-        statusText.text = "CONNECTING...";
         device.connect();
         if (device != null)
             statusText.text = "CONNECTED";
@@ -67,51 +67,39 @@ public class LetsGetBluetooth : MonoBehaviour {
     {
         statusText.text = "DISCONNECTING...";
 
-        filePath = Application.persistentDataPath + fileName;
-        string[] testData = { "Test1", "Test2", "Test3" };
-        File.WriteAllLines(filePath, testData);
-
-        testPointText1.text = "Maybe wrote data to file";
-
-        testPointText2.text = filePath;
-
-        // https://gamedevelopment.tutsplus.com/tutorials/how-to-save-and-load-your-players-progress-in-unity--cms-20934
-
-        //// Save data from dynamic array to persistentDataPath
-        //string[][] output = new string[rowData.Count][]; // init 2D array to convert to csv
-
-        //testPointText1.text = rowData.Count.ToString();
-
-        //for (int i = 0; i < output.Length; i++)
-        //{
-        //    output[i] = rowData[i];
-        //    //testPointText1.text = "Wrote " + rowData[i][i] + " to output: " + output[i][i];
-        //}
-
-        //int length = output.GetLength(0);
-        //StringBuilder sb = new StringBuilder();
-
-        ////testPointText2.text = length.ToString();
-
-        //for (int index = 0; index < length; index++)
-        //    sb.AppendLine(string.Join(delimiter, output[index]));
-
-        //filePath = Application.persistentDataPath + fileName;
-
-        //StreamWriter outStream = File.CreateText(filePath);
-        //outStream.WriteLine(sb);
-        //outStream.Close();
-
+        try
         {
-        /* 
-        List<string> data1String = rowData.ConvertAll<string>(x => x.ToString()); // convert from int/float to string
-        testPointText1.text = "1";
-        string[] data1StringArray = rowData.ToArray(); // convert from string list to string array
-        testPointText1.text = "2";
-        File.WriteAllLines(Application.persistentDataPath + "/" + fileName, data1StringArray);
-        testPointText1.text = "3";
-        */
+            filePath = Application.persistentDataPath + fileName;
+
+            if (!File.Exists(filePath))
+            {
+                Debug.Log("Saving file to: " + filePath);
+
+                // Save data from dynamic array to persistentDataPath
+                string[][] output = new string[rowData.Count][]; // init 2D array to convert to csv
+
+                for (int i = 0; i < output.Length; i++)
+                    output[i] = rowData[i];
+
+                int length = output.GetLength(0);
+                StringBuilder sb = new StringBuilder();
+
+                for (int index = 0; index < length; index++)
+                    sb.AppendLine(string.Join(delimiter, output[index]));
+
+                StreamWriter outStream = File.CreateText(filePath);
+                outStream.WriteLine(sb);
+                outStream.Close();
+            }
+            else
+                Debug.Log("File already exists at: " + filePath);
+
         }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
+        }
+
 
         // Close app
         device.close();
@@ -120,13 +108,16 @@ public class LetsGetBluetooth : MonoBehaviour {
 
     public void requestData()
     {
+        Debug.Log("Getting BT data...");
+
         if (device != null)
             device.send(System.Text.Encoding.ASCII.GetBytes("Send me data\n"));
     }
-	
-	// Update is called once per frame
-	void Update() {
-		if (device.IsReading)
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (device.IsReading)
         {
             byte[] msg = device.read();
 
@@ -144,21 +135,14 @@ public class LetsGetBluetooth : MonoBehaviour {
 
                 // Add calibration algorithms here?
 
-                //// Log data to dynamic array
-                //rowDataTemp = new string[rowDataSize];
-                //for (int i = 1; i < rowDataSize; i++)
-                //{
-                //    rowDataTemp[i] = msg[i].ToString();
-                //}
-                //rowData.Add(rowDataTemp);
-
-                //testPointText3.text = "Added " + rowDataTemp[1] + rowDataTemp[2] + rowDataTemp[3];
-
-                //foreach (string[] item in rowData)
-                //    foreach (string subItem in item)
-                //        testPointText4.text = subItem;
-
+                // Log data to dynamic array
+                rowDataTemp = new string[rowDataSize];
+                for (int i = 1; i < rowDataSize; i++)
+                {
+                    rowDataTemp[i] = msg[i].ToString();
+                }
+                rowData.Add(rowDataTemp);
             }
         }
-	}
+    }
 }
