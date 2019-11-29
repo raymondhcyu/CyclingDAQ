@@ -45,11 +45,33 @@ public class SystemScripts : MonoBehaviour {
         else
         {
             Debug.Log("Location service functioning!");
-            longitude.text = Input.location.lastData.longitude.ToString();
-            latitude.text = Input.location.lastData.latitude.ToString();
+            //longitude.text = Input.location.lastData.longitude.ToString();
+            //latitude.text = Input.location.lastData.latitude.ToString();
         }
     }
 	
+    public float GetLng()
+    {
+        if (Input.location.status == LocationServiceStatus.Failed)
+        {
+            Debug.Log("Location services failed: Longitude");
+            return -1;
+        }
+        else
+            return Input.location.lastData.longitude;
+    }
+
+    public float GetLat()
+    {
+        if (Input.location.status == LocationServiceStatus.Failed)
+        {
+            Debug.Log("Location services failed: Latitude");
+            return -1;
+        }
+        else
+            return Input.location.lastData.latitude;
+    }
+
     public void exitApp ()
     {
         Input.location.Stop();
