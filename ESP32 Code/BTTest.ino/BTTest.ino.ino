@@ -15,7 +15,7 @@ BluetoothSerial SerialBT;
 
 String inMessage = "";
 
-byte buff[] = {255, 50, 100, 150}; // 4 byte message format
+byte buff[] = {255, 50, 100, 150, 200, 50, 100, 150}; // 8 byte message format
 
 void setup() {
   Serial.begin(115200);
@@ -55,10 +55,18 @@ void loop() {
       SerialBT.write(buff[2] + j);
       Serial.print(buff[2] + j);
       SerialBT.write(buff[3] + j);
-      Serial.println(buff[3] + j);
+      Serial.print(buff[3] + j);
+      SerialBT.write(buff[4] + j);
+      Serial.print(buff[4] + j);
+      SerialBT.write(buff[5] + j);
+      Serial.print(buff[5] + j);
+      SerialBT.write(buff[6] + j);
+      Serial.print(buff[6] + j);
+      SerialBT.write(buff[7] + j);
+      Serial.print(buff[7] + j);
   
       j++;
-      delay(100);
+      delay(500);
     }
 //      for (int i = 0; i < sizeof(buff); i++) {
 //        if (buff[i] = 0) {
