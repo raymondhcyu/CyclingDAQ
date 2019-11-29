@@ -12,11 +12,16 @@ public class SystemScripts : MonoBehaviour {
     IEnumerator Start ()
     {
         Screen.orientation = ScreenOrientation.LandscapeRight;
+        Debug.Log("Inside IEnumerator");
 
-        if (!Input.location.isEnabledByUser)
-            yield break;
+        //if (!Input.location.isEnabledByUser)
+        //{
+        //    Debug.Log("Location services disabled by user.");
+        //    yield break;
+        //}
 
         Input.location.Start();
+        Debug.Log("Force starting user location");
 
         int maxWait = 20; // wait until service initializes
 
@@ -29,6 +34,12 @@ public class SystemScripts : MonoBehaviour {
         if (maxWait < 1)
         {
             Debug.Log("GNSS timed out...");
+            yield break;
+        }
+        
+        if (Input.location.status == LocationServiceStatus.Failed)
+        {
+            Debug.Log("Location services failed");
             yield break;
         }
         else
