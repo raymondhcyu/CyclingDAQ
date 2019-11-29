@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TechTweaking.Bluetooth;
-using TMPro;
+using TMPro; // for textmeshpro
 
 using System;
 using System.IO;
@@ -45,7 +45,7 @@ public class LetsGetBluetooth : MonoBehaviour
     void Start()
     {
         // Change to have timestamp
-        fileName = "/bikingProgramData44.csv";
+        fileName = "/bikingProgramData50.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
