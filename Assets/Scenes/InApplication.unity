@@ -998,6 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d502cfea0bcfe5d4998088037174a7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  longitude: {fileID: 721218507}
+  latitude: {fileID: 232172050}
 --- !u!4 &555715455
 Transform:
   m_ObjectHideFlags: 0
