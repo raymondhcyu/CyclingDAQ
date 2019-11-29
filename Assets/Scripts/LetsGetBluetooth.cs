@@ -12,11 +12,11 @@ using System.Text;
 
 public class LetsGetBluetooth : MonoBehaviour
 {
-
     private BluetoothDevice device;
     private string fileName;
     private List<string[]> rowData = new List<string[]>(); // dynamic array; https://sushanta1991.blogspot.com/2015/02/how-to-write-data-to-csv-file-in-unity.html 
-    private const int rowDataSize = 4; // change to match data size
+    private const int rowDataSize = 10; // change to match data size to save to CSV (not BT packet)
+    private const int BTDataSize = 8;
     private string[] rowDataTemp = new string[rowDataSize]; // temp array for writing
     // Implement try catch for out of memory? https://docs.microsoft.com/en-us/dotnet/api/system.outofmemoryexception?view=netframework-4.8
     private string delimiter = ",";
@@ -24,15 +24,19 @@ public class LetsGetBluetooth : MonoBehaviour
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
-    public TextMeshProUGUI messageZero; // message at index 0
-    public TextMeshProUGUI messageOne; // message at index 1
-    public TextMeshProUGUI messageTwo; // message at index 2
-    public TextMeshProUGUI messageThree; // message at index 3
-    public TextMeshProUGUI messageFour; // message at index 4
+    public TextMeshProUGUI xAccelDisplay;
+    public TextMeshProUGUI yAccelDisplay;
+    public TextMeshProUGUI zAccelDisplay;
+    public TextMeshProUGUI steeringDisplay; // same as yaw
+    public TextMeshProUGUI pitchDisplay;
+    public TextMeshProUGUI rollDisplay;
+    public TextMeshProUGUI brakeDisplay;
 
     public TextMeshProUGUI testPointText1;
     public TextMeshProUGUI testPointText2;
     public TextMeshProUGUI testPointText3;
+
+    public SystemScripts phoneSystemScripts; // get GPS data
 
     void Awake()
     {
@@ -45,14 +49,20 @@ public class LetsGetBluetooth : MonoBehaviour
     void Start()
     {
         // Change to have timestamp
-        fileName = "/bikingProgramData50.csv";
+        fileName = "/bikingProgramData54.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
         rowDataTemp[0] = "Time";
-        rowDataTemp[1] = "xAcc";
-        rowDataTemp[2] = "yAcc";
-        rowDataTemp[3] = "zAcc";
+        rowDataTemp[1] = "X Accel";
+        rowDataTemp[2] = "Y Accel";
+        rowDataTemp[3] = "Z Accel";
+        rowDataTemp[4] = "Yaw";
+        rowDataTemp[5] = "Pitch";
+        rowDataTemp[6] = "Roll";
+        rowDataTemp[7] = "Brake";
+        rowDataTemp[8] = "Longitude";
+        rowDataTemp[9] = "Latitude";
         rowData.Add(rowDataTemp);
     }
 
@@ -100,7 +110,6 @@ public class LetsGetBluetooth : MonoBehaviour
             Debug.Log(e);
         }
 
-
         // Close app
         device.close();
         statusText.text = "DISCONNECTED";
@@ -123,24 +132,68 @@ public class LetsGetBluetooth : MonoBehaviour
 
             if ((msg != null) && (msg[0] == 255))
             {
-                // Display updates to UI
-                statusText.text = "MSG RECEIVED: " + msg[1].ToString() + msg[2].ToString() + msg[3].ToString();
-                //statusText.text = "MSG RECEIVED: " + foreach (byte item in msg) {item.ToString()};
-                sizeOfMessage.text = "MSG SIZE: " + msg.Length;
-                //messageZero.text = msg[0].ToString(); // start byte 255
-                messageOne.text = msg[1].ToString();
-                messageTwo.text = msg[2].ToString();
-                messageThree.text = msg[3].ToString();
-                //messageFour.text = msg[4].ToString();
+                Debug.Log("Processing message.");
 
-                // Add calibration algorithms here?
+                // Display updates to UI
+                statusText.text = "MSG RECEIVED: " + msg[1].ToString() + 
+                    msg[2].ToString() + msg[3].ToString() + msg[4].ToString() + 
+                    msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
+                sizeOfMessage.text = "MSG SIZE: " + msg.Length;
+
+                Debug.Log("Got to here -3");
+
+                // Display messages to UI
+                {
+                xAccelDisplay.text = msg[1].ToString();
+                yAccelDisplay.text = msg[2].ToString();
+                zAccelDisplay.text = msg[3].ToString();
+                steeringDisplay.text = msg[4].ToString();
+                brakeDisplay.text = msg[5].ToString();
+                }
+
+                Debug.Log("Got to here -2");
 
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
-                for (int i = 1; i < rowDataSize; i++)
-                {
+
+                Debug.Log("Got to here -1");
+
+                // Log time
+                // rowDataTemp[0] = System.DateTime.Now.ToLongDateString();
+                rowDataTemp[0] = "0";
+
+                // Acceleration data, start from 1 to skip start byte
+                for (int i = 1; i < 4; i++)
                     rowDataTemp[i] = msg[i].ToString();
-                }
+
+                Debug.Log("Got to here 0");
+
+                // Steering (yaw) data
+                rowDataTemp[4] = msg[4].ToString();
+
+                Debug.Log("Got to here 1");
+
+                // Pitch and roll data
+                rowDataTemp[5] = msg[1].ToString(); // repeat x-axis accel for now
+                rowDataTemp[6] = msg[2].ToString(); // repeat y-axis accel for now
+
+                Debug.Log("Got to here 2");
+
+                // Brake data
+                rowDataTemp[7] = msg[5].ToString();
+
+                Debug.Log("Got to here 3");
+
+                // Every time receive message also get GPS data
+                //Debug.Log("GPS data: " + phoneSystemScripts.GetLng().ToString() + "\n" + phoneSystemScripts.GetLat().ToString());
+                phoneSystemScripts.longitude.text = phoneSystemScripts.GetLng().ToString();
+                phoneSystemScripts.latitude.text = phoneSystemScripts.GetLat().ToString();
+                rowDataTemp[8] = phoneSystemScripts.GetLng().ToString();
+                rowDataTemp[9] = phoneSystemScripts.GetLat().ToString();
+
+                Debug.Log("Got to here 4");
+
+                // Write to data
                 rowData.Add(rowDataTemp);
             }
         }
