@@ -6,8 +6,8 @@ using TMPro;
 
 public class SystemScripts : MonoBehaviour {
 
-    public TextMeshProUGUI longitude;
-    public TextMeshProUGUI latitude;
+    public TextMeshProUGUI longitudeDisplay;
+    public TextMeshProUGUI latitudeDisplay;
 
     IEnumerator Start ()
     {
@@ -45,8 +45,6 @@ public class SystemScripts : MonoBehaviour {
         else
         {
             Debug.Log("Location service functioning!");
-            //longitude.text = Input.location.lastData.longitude.ToString();
-            //latitude.text = Input.location.lastData.latitude.ToString();
         }
     }
 	
