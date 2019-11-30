@@ -66,7 +66,7 @@ void loop() {
       Serial.print(buff[7] + j);
   
       j++;
-      delay(500);
+      delay(100);
     }
 //      for (int i = 0; i < sizeof(buff); i++) {
 //        if (buff[i] = 0) {

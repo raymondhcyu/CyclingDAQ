@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,13 +13,7 @@ public class SystemScripts : MonoBehaviour {
     IEnumerator Start ()
     {
         Screen.orientation = ScreenOrientation.LandscapeRight;
-        Debug.Log("Inside IEnumerator");
-
-        //if (!Input.location.isEnabledByUser)
-        //{
-        //    Debug.Log("Location services disabled by user.");
-        //    yield break;
-        //}
+        Application.runInBackground = true; // force to run in background even with screen off?
 
         Input.location.Start();
         Debug.Log("Force starting user location");
