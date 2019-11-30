@@ -49,7 +49,7 @@ public class LetsGetBluetooth : MonoBehaviour
     void Start()
     {
         // Change to have timestamp
-        fileName = "/bikingProgramData54.csv";
+        fileName = "/bikingProgramData55.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
@@ -142,15 +142,6 @@ public class LetsGetBluetooth : MonoBehaviour
 
                 Debug.Log("Got to here -3");
 
-                // Display messages to UI
-                {
-                xAccelDisplay.text = msg[1].ToString();
-                yAccelDisplay.text = msg[2].ToString();
-                zAccelDisplay.text = msg[3].ToString();
-                steeringDisplay.text = msg[4].ToString();
-                brakeDisplay.text = msg[5].ToString();
-                }
-
                 Debug.Log("Got to here -2");
 
                 // Log data to dynamic array
@@ -186,10 +177,21 @@ public class LetsGetBluetooth : MonoBehaviour
 
                 // Every time receive message also get GPS data
                 //Debug.Log("GPS data: " + phoneSystemScripts.GetLng().ToString() + "\n" + phoneSystemScripts.GetLat().ToString());
-                phoneSystemScripts.longitude.text = phoneSystemScripts.GetLng().ToString();
-                phoneSystemScripts.latitude.text = phoneSystemScripts.GetLat().ToString();
+                phoneSystemScripts.longitudeDisplay.text = phoneSystemScripts.GetLng().ToString();
+                phoneSystemScripts.latitudeDisplay.text = phoneSystemScripts.GetLat().ToString();
                 rowDataTemp[8] = phoneSystemScripts.GetLng().ToString();
                 rowDataTemp[9] = phoneSystemScripts.GetLat().ToString();
+
+                // Display messages to UI
+                {
+                    xAccelDisplay.text = msg[1].ToString();
+                    yAccelDisplay.text = msg[2].ToString();
+                    zAccelDisplay.text = msg[3].ToString();
+                    steeringDisplay.text = msg[4].ToString();
+                    brakeDisplay.text = msg[5].ToString();
+                    pitchDisplay.text = msg[1].ToString();
+                    rollDisplay.text = msg[2].ToString();
+                }
 
                 Debug.Log("Got to here 4");
 
