@@ -21,6 +21,7 @@ public class LetsGetBluetooth : MonoBehaviour
     // Implement try catch for out of memory? https://docs.microsoft.com/en-us/dotnet/api/system.outofmemoryexception?view=netframework-4.8
     private string delimiter = ",";
     private string filePath = "";
+    private string timeStamp = "";
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -48,8 +49,18 @@ public class LetsGetBluetooth : MonoBehaviour
 
     void Start()
     {
-        // Change to have timestamp
-        fileName = "/bikingProgramData57.csv";
+
+    }
+
+    public void connect()
+    {
+        device.connect();
+        if (device != null)
+            statusText.text = "CONNECTED";
+
+        // Set filename with timestamp
+        timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+        fileName = "/bikingData_" + timeStamp + ".csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
@@ -66,17 +77,8 @@ public class LetsGetBluetooth : MonoBehaviour
         rowData.Add(rowDataTemp);
     }
 
-    public void connect()
-    {
-        device.connect();
-        if (device != null)
-            statusText.text = "CONNECTED";
-    }
-
     public void disconnect()
     {
-        statusText.text = "DISCONNECTING...";
-
         try
         {
             filePath = Application.persistentDataPath + fileName;
@@ -112,7 +114,7 @@ public class LetsGetBluetooth : MonoBehaviour
 
         // Close app
         device.close();
-        statusText.text = "DISCONNECTED";
+        statusText.text = "DISCONNECTED & FILE SAVED";
     }
 
     public void requestData()
@@ -144,8 +146,8 @@ public class LetsGetBluetooth : MonoBehaviour
                 rowDataTemp = new string[rowDataSize];
 
                 // Log time
-                // rowDataTemp[0] = System.DateTime.Now.ToLongDateString();
-                rowDataTemp[0] = "0";
+                timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+                rowDataTemp[0] = timeStamp;
 
                 // Acceleration data, start from 1 to skip start byte
                 for (int i = 1; i < 4; i++)
