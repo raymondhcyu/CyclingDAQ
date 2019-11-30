@@ -49,7 +49,7 @@ public class LetsGetBluetooth : MonoBehaviour
     void Start()
     {
         // Change to have timestamp
-        fileName = "/bikingProgramData55.csv";
+        fileName = "/bikingProgramData57.csv";
 
         // Init titles of CSV
         rowDataTemp = new string[rowDataSize];
@@ -140,14 +140,8 @@ public class LetsGetBluetooth : MonoBehaviour
                     msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
 
-                Debug.Log("Got to here -3");
-
-                Debug.Log("Got to here -2");
-
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
-
-                Debug.Log("Got to here -1");
 
                 // Log time
                 // rowDataTemp[0] = System.DateTime.Now.ToLongDateString();
@@ -157,30 +151,22 @@ public class LetsGetBluetooth : MonoBehaviour
                 for (int i = 1; i < 4; i++)
                     rowDataTemp[i] = msg[i].ToString();
 
-                Debug.Log("Got to here 0");
-
                 // Steering (yaw) data
                 rowDataTemp[4] = msg[4].ToString();
-
-                Debug.Log("Got to here 1");
 
                 // Pitch and roll data
                 rowDataTemp[5] = msg[1].ToString(); // repeat x-axis accel for now
                 rowDataTemp[6] = msg[2].ToString(); // repeat y-axis accel for now
 
-                Debug.Log("Got to here 2");
-
                 // Brake data
                 rowDataTemp[7] = msg[5].ToString();
-
-                Debug.Log("Got to here 3");
 
                 // Every time receive message also get GPS data
                 //Debug.Log("GPS data: " + phoneSystemScripts.GetLng().ToString() + "\n" + phoneSystemScripts.GetLat().ToString());
                 phoneSystemScripts.longitudeDisplay.text = phoneSystemScripts.GetLng().ToString();
                 phoneSystemScripts.latitudeDisplay.text = phoneSystemScripts.GetLat().ToString();
-                rowDataTemp[8] = phoneSystemScripts.GetLng().ToString();
-                rowDataTemp[9] = phoneSystemScripts.GetLat().ToString();
+                rowDataTemp[8] = phoneSystemScripts.GetLng().ToString("R");
+                rowDataTemp[9] = phoneSystemScripts.GetLat().ToString("R");
 
                 // Display messages to UI
                 {
@@ -192,8 +178,6 @@ public class LetsGetBluetooth : MonoBehaviour
                     pitchDisplay.text = msg[1].ToString();
                     rollDisplay.text = msg[2].ToString();
                 }
-
-                Debug.Log("Got to here 4");
 
                 // Write to data
                 rowData.Add(rowDataTemp);
