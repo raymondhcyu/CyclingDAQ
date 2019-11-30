@@ -194,8 +194,8 @@ void setUART() {
 
 void setADC() {
     // Enable ADC_B (ug449)
-    ADC10CTL0 &= ~ADC10ENC;                        // ensure ENC is clear
-    ADC10CTL0 = ADC10ON + ADC10SHT_3;
+    ADC10CTL0 &= ~ADC10ENC;           // ensure ENC is clear
+    ADC10CTL0 = ADC10ON + ADC10SHT_3; //ON -> Turns on //SHT -> define the number of ADC10CLK cycles in the sampling period for the ADC10 (ENC must be zero to change this)
     ADC10CTL1 = ADC10SHS_0 + ADC10SHP + ADC10CONSEQ_0 + ADC10SSEL_0;
     ADC10CTL2 = ADC10RES; // 8 or 10 bit ADC out
     ADC10MCTL0 = ADC10SREF_1 + ADC10INCH_12; // ADC10INCH_12 for potentiometer
