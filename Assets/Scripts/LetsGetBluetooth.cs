@@ -22,6 +22,7 @@ public class LetsGetBluetooth : MonoBehaviour
     private string delimiter = ",";
     private string filePath = "";
     private string timeStamp = "";
+    private Queue<byte[]> dataQueue = new Queue<byte[]>();
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -49,7 +50,6 @@ public class LetsGetBluetooth : MonoBehaviour
 
     void Start()
     {
-
     }
 
     public void connect()
@@ -132,13 +132,58 @@ public class LetsGetBluetooth : MonoBehaviour
         {
             byte[] msg = device.read();
 
+            //if (msg != null)
+            //{
+            //    Debug.Log("Line 136, msg length: " + msg.Length);
+            //    for (int i = 0; i < msg.Length; i++)
+            //    {
+            //        Debug.Log(msg[i]);
+            //    }
+            //    //dataQueue.Enqueue(msg);
+            //    //Debug.Log(dataQueue.Dequeue());
+            //    Debug.Log("Line 137");
+            //}
+            //Debug.Log("Line 139");
+
+            //// Dequeue if first byte isn't 255 (start byte)
+            ////if (dataQueue.Peek() != BitConverter.GetBytes(255))
+            ////{
+            ////    Debug.Log("Line 143");
+            ////    dataQueue.Dequeue();
+            ////}
+            ////else if (dataQueue.Count == 8)
+            ////{
+            ////    Debug.Log("Line 148");
+
+            ////    int startByte = System.Convert.ToInt32(dataQueue.Dequeue()); // remove start byte
+            ////    Debug.Log("Start byte is: " + startByte);
+            ////    int xAcc = System.Convert.ToInt32(dataQueue.Dequeue()); // remove xAcc
+            ////    Debug.Log("xAcc is: " + xAcc);
+            ////    int yAcc = System.Convert.ToInt32(dataQueue.Dequeue()); // remove xAcc
+            ////    Debug.Log("xAcc is: " + yAcc);
+            ////    int zAcc = System.Convert.ToInt32(dataQueue.Dequeue()); // remove xAcc
+            ////    Debug.Log("xAcc is: " + zAcc);
+
+            ////    int data1 = System.Convert.ToInt32(dataQueue.Dequeue()); // remove data1
+            ////    Debug.Log("data1 is: " + data1);
+            ////    int data2 = System.Convert.ToInt32(dataQueue.Dequeue()); // remove data2
+            ////    Debug.Log("data2 is: " + data2);
+            ////    int data3 = System.Convert.ToInt32(dataQueue.Dequeue()); // remove data3
+            ////    Debug.Log("data3 is: " + data3);
+            ////    int data4 = System.Convert.ToInt32(dataQueue.Dequeue()); // remove data4
+            ////    Debug.Log("data4 is: " + data4);
+            ////}
+
+            ////Debug.Log("Message size is: " + msg.Length);
+            ////Debug.Log("Message zero is: " + msg[0]);
+
             if ((msg != null) && (msg[0] == 255))
             {
                 Debug.Log("Processing message.");
 
                 // Display updates to UI
-                statusText.text = "MSG RECEIVED: " + msg[1].ToString() + 
-                    msg[2].ToString() + msg[3].ToString() + msg[4].ToString() + 
+                statusText.text = "MSG RECEIVED: " + msg[1].ToString() +
+                    msg[2].ToString() + msg[3].ToString() + msg[4].ToString() +
                     msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
 
