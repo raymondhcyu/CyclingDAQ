@@ -20,7 +20,6 @@ void setup(void);
 void setClk(void);
 void setUART(void);
 void setADC(void);
-void setPotInput(void);
 void readForce(void);
 void transmitData(int data);
 void setForceInput(void);
