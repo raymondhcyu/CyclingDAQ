@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-D:/Documents/GitHub/biking423/MainTest0.6.apk
+D:/Documents/GitHub/biking423/MainTest0.7.apk
 SceneListBegin?
 Assets/Scenes/InApplication.unity
 SceneListEnd?
