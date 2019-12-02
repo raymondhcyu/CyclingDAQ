@@ -70,7 +70,7 @@ public class LetsGetBluetooth : MonoBehaviour
         rowDataTemp[1] = "X Accel";
         rowDataTemp[2] = "Y Accel";
         rowDataTemp[3] = "Z Accel";
-        rowDataTemp[4] = "Empty";
+        rowDataTemp[4] = "Warning";
         rowDataTemp[5] = "Pitch";
         rowDataTemp[6] = "Roll";
         rowDataTemp[7] = "Brake";
@@ -156,9 +156,13 @@ public class LetsGetBluetooth : MonoBehaviour
                     Debug.Log("Brake warning.");
                     brakeWarning.text = "WARNING: RELEASE BRAKE";
                     brakeWarning.color = new Color(255, 0, 0, 255);
+                    msg[4] = 1;
                 }
                 else
+                {
                     brakeWarning.text = "";
+                    msg[4] = 0;
+                }
 
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
@@ -171,7 +175,7 @@ public class LetsGetBluetooth : MonoBehaviour
                 for (int i = 1; i < 4; i++)
                     rowDataTemp[i] = msg[i].ToString();
 
-                // Steering (yaw) data
+                // Brake warning data
                 rowDataTemp[4] = msg[4].ToString();
 
                 // Pitch and roll data
