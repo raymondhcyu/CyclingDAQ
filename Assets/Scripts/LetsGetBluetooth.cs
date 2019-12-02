@@ -22,7 +22,6 @@ public class LetsGetBluetooth : MonoBehaviour
     private string delimiter = ",";
     private string filePath = "";
     private string timeStamp = "";
-    private Queue<byte[]> dataQueue = new Queue<byte[]>();
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -33,10 +32,6 @@ public class LetsGetBluetooth : MonoBehaviour
     public TextMeshProUGUI pitchDisplay;
     public TextMeshProUGUI rollDisplay;
     public TextMeshProUGUI brakeDisplay;
-
-    public TextMeshProUGUI testPointText1;
-    public TextMeshProUGUI testPointText2;
-    public TextMeshProUGUI testPointText3;
 
     public SystemScripts phoneSystemScripts; // get GPS data
 
