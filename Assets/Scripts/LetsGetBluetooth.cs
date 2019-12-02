@@ -22,6 +22,8 @@ public class LetsGetBluetooth : MonoBehaviour
     private string delimiter = ",";
     private string filePath = "";
     private string timeStamp = "";
+    private int correctPitch;
+    private int correctRoll;
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -63,7 +65,7 @@ public class LetsGetBluetooth : MonoBehaviour
         rowDataTemp[1] = "X Accel";
         rowDataTemp[2] = "Y Accel";
         rowDataTemp[3] = "Z Accel";
-        rowDataTemp[4] = "Yaw";
+        rowDataTemp[4] = "Empty";
         rowDataTemp[5] = "Pitch";
         rowDataTemp[6] = "Roll";
         rowDataTemp[7] = "Brake";
@@ -137,11 +139,15 @@ public class LetsGetBluetooth : MonoBehaviour
                     msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
 
+                // Apply corrections
+                correctPitch = -1 * (msg[3] - 127) * 3;
+                correctRoll = Mathf.Abs(msg[1] - 127) * 2;
+
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
 
                 // Log time
-                timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+                timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_ff");
                 rowDataTemp[0] = timeStamp;
 
                 // Acceleration data, start from 1 to skip start byte
@@ -152,8 +158,8 @@ public class LetsGetBluetooth : MonoBehaviour
                 rowDataTemp[4] = msg[4].ToString();
 
                 // Pitch and roll data
-                rowDataTemp[5] = msg[1].ToString(); // repeat x-axis accel for now
-                rowDataTemp[6] = msg[2].ToString(); // repeat y-axis accel for now
+                rowDataTemp[5] = correctPitch.ToString();
+                rowDataTemp[6] = correctRoll.ToString();
 
                 // Brake data
                 rowDataTemp[7] = msg[5].ToString();
@@ -172,8 +178,8 @@ public class LetsGetBluetooth : MonoBehaviour
                     zAccelDisplay.text = msg[3].ToString();
                     steeringDisplay.text = msg[4].ToString();
                     brakeDisplay.text = msg[5].ToString();
-                    pitchDisplay.text = msg[1].ToString();
-                    rollDisplay.text = msg[2].ToString();
+                    pitchDisplay.text = correctPitch.ToString();
+                    rollDisplay.text = correctRoll.ToString();
                 }
 
                 // Write to data
