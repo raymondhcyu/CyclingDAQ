@@ -25,6 +25,8 @@ public class LetsGetBluetooth : MonoBehaviour
     private int correctPitch;
     private int correctRoll;
     private int correctBrake;
+    private int brakeLimit;
+    private int rollLimit;
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -38,6 +40,11 @@ public class LetsGetBluetooth : MonoBehaviour
     public TextMeshProUGUI brakeWarning;
 
     public SystemScripts phoneSystemScripts; // get GPS data
+    public AudioSource audioSource;
+    public AudioClip warningSound;
+    public float volume = 2f;
+    public InputField brakeLimitInputField;
+    public InputField rollLimitInputField;
 
     void Awake()
     {
@@ -45,6 +52,10 @@ public class LetsGetBluetooth : MonoBehaviour
 
         device = new BluetoothDevice();
         device.Name = "ESP32test";
+
+        // Preset roll limits
+        brakeLimitInputField.text = brakeLimit.ToString();
+        rollLimitInputField.text = rollLimit.ToString();
     }
 
     void Start()
@@ -131,6 +142,9 @@ public class LetsGetBluetooth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        brakeLimit = System.Convert.ToInt32(brakeLimitInputField.text);
+        rollLimit = System.Convert.ToInt32(rollLimitInputField.text);
+
         if (device.IsReading)
         {
             byte[] msg = device.read();
@@ -151,12 +165,14 @@ public class LetsGetBluetooth : MonoBehaviour
                 correctRoll = Mathf.Abs(msg[1] - 127) * 2;
                 correctBrake = (int)(3.48 * Math.Exp(0.0279 * msg[5])); // cast as int
 
-                if ((msg[5] > 50) && (correctRoll > 10)) // purposely leave this as comparing raw brake byte
+                // compare brakeLimit in PSI and rollLimit in degrees
+                if ((correctBrake > brakeLimit) && (correctRoll > rollLimit))
                 {
                     Debug.Log("Brake warning.");
-                    brakeWarning.text = "WARNING: RELEASE BRAKE";
+                    brakeWarning.text = "WARNING: \nRELEASE BRAKE";
                     brakeWarning.color = new Color(255, 0, 0, 255);
                     msg[4] = 1;
+                    audioSource.PlayOneShot(warningSound, volume);
                 }
                 else
                 {
