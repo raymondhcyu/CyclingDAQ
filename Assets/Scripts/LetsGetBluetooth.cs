@@ -24,6 +24,7 @@ public class LetsGetBluetooth : MonoBehaviour
     private string timeStamp = "";
     private int correctPitch;
     private int correctRoll;
+    private int correctBrake;
 
     public TextMeshProUGUI statusText;
     public TextMeshProUGUI sizeOfMessage; // get message size
@@ -148,8 +149,9 @@ public class LetsGetBluetooth : MonoBehaviour
                 // Apply corrections and brake warning
                 correctPitch = (-1 * (msg[3] - 127) * 3) - 20;
                 correctRoll = Mathf.Abs(msg[1] - 127) * 2;
+                correctBrake = (int)(3.48 * Math.Exp(0.0279 * msg[5])); // cast as int
 
-                if ((msg[5] > 50) && (correctRoll > 10))
+                if ((msg[5] > 50) && (correctRoll > 10)) // purposely leave this as comparing raw brake byte
                 {
                     Debug.Log("Brake warning.");
                     brakeWarning.text = "WARNING: RELEASE BRAKE";
@@ -177,7 +179,7 @@ public class LetsGetBluetooth : MonoBehaviour
                 rowDataTemp[6] = correctRoll.ToString();
 
                 // Brake data
-                rowDataTemp[7] = msg[5].ToString();
+                rowDataTemp[7] = correctBrake.ToString();
 
                 // Every time receive message also get GPS data
                 //Debug.Log("GPS data: " + phoneSystemScripts.GetLng().ToString() + "\n" + phoneSystemScripts.GetLat().ToString());
@@ -192,7 +194,7 @@ public class LetsGetBluetooth : MonoBehaviour
                     yAccelDisplay.text = msg[2].ToString();
                     zAccelDisplay.text = msg[3].ToString();
                     steeringDisplay.text = msg[4].ToString();
-                    brakeDisplay.text = msg[5].ToString();
+                    brakeDisplay.text = correctBrake.ToString();
                     pitchDisplay.text = correctPitch.ToString();
                     rollDisplay.text = correctRoll.ToString();
                 }
