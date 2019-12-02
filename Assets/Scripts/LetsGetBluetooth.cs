@@ -164,7 +164,7 @@ public class LetsGetBluetooth : MonoBehaviour
                 rowDataTemp = new string[rowDataSize];
 
                 // Log time
-                timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_ff");
+                timeStamp = System.DateTime.Now.ToString("HH:mm:ss:ff");
                 rowDataTemp[0] = timeStamp;
 
                 // Acceleration data, start from 1 to skip start byte
