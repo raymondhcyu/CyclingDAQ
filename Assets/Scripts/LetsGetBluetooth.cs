@@ -115,7 +115,7 @@ public class LetsGetBluetooth : MonoBehaviour
 
         // Close app
         device.close();
-        statusText.text = "DISCONNECTED & FILE SAVED";
+        statusText.text = "DISCONNECTED & SAVED";
         statusText.color = new Color(0, 179, 255, 255);
     }
 
@@ -139,19 +139,24 @@ public class LetsGetBluetooth : MonoBehaviour
                 Debug.Log("Processing message.");
 
                 // Display updates to UI
-                statusText.text = msg[1].ToString() +
-                    msg[2].ToString() + msg[3].ToString() + msg[4].ToString() +
-                    msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
+                statusText.color = new Color(0, 255, 0, 255);
+                //statusText.text = msg[1].ToString() +
+                //    msg[2].ToString() + msg[3].ToString() + msg[4].ToString() +
+                //    msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
 
                 // Apply corrections and brake warning
-                correctPitch = -1 * (msg[3] - 127) * 3;
+                correctPitch = (-1 * (msg[3] - 127) * 3) - 20;
                 correctRoll = Mathf.Abs(msg[1] - 127) * 2;
-                if (msg[5] > 200)
+
+                if ((msg[5] > 50) && (correctRoll > 10))
                 {
-                    brakeWarning.text = "WARNING: TURN BRAKE";
+                    Debug.Log("Brake warning.");
+                    brakeWarning.text = "WARNING: RELEASE BRAKE";
                     brakeWarning.color = new Color(255, 0, 0, 255);
                 }
+                else
+                    brakeWarning.text = "";
 
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
