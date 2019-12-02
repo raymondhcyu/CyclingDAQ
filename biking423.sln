@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423", "biking423.csproj", "{788E849D-16E7-39BD-430D-0514A84CAE1F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423", "biking423.csproj", "{788E849D-16E7-39BD-430D-0514A84CAE1F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423.Plugins", "biking423.Plugins.csproj", "{94C9B90A-0642-7D2D-1CCB-E346224144B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423.Editor", "biking423.Editor.csproj", "{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423.Editor", "biking423.Editor.csproj", "{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423.Editor", "biking423.Editor.csproj", "{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biking423.Editor", "biking423.Editor.csproj", "{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}"
 EndProject
@@ -19,6 +25,10 @@ Global
 		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788E849D-16E7-39BD-430D-0514A84CAE1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94C9B90A-0642-7D2D-1CCB-E346224144B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94C9B90A-0642-7D2D-1CCB-E346224144B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94C9B90A-0642-7D2D-1CCB-E346224144B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,11 +37,20 @@ Global
 		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC94B01-2740-1DAF-4C64-FAC54F953DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F0B4AB79-B3D2-4439-B0E2-1D8E6ED6F36C}
 	EndGlobalSection
 EndGlobal
