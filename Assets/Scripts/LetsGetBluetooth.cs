@@ -34,6 +34,7 @@ public class LetsGetBluetooth : MonoBehaviour
     public TextMeshProUGUI pitchDisplay;
     public TextMeshProUGUI rollDisplay;
     public TextMeshProUGUI brakeDisplay;
+    public TextMeshProUGUI brakeWarning;
 
     public SystemScripts phoneSystemScripts; // get GPS data
 
@@ -53,7 +54,10 @@ public class LetsGetBluetooth : MonoBehaviour
     {
         device.connect();
         if (device != null)
+        {
             statusText.text = "CONNECTED";
+            statusText.color = new Color(0, 255, 0, 255);
+        }
 
         // Set filename with timestamp
         timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
@@ -112,6 +116,7 @@ public class LetsGetBluetooth : MonoBehaviour
         // Close app
         device.close();
         statusText.text = "DISCONNECTED & FILE SAVED";
+        statusText.color = new Color(0, 179, 255, 255);
     }
 
     public void requestData()
@@ -134,14 +139,19 @@ public class LetsGetBluetooth : MonoBehaviour
                 Debug.Log("Processing message.");
 
                 // Display updates to UI
-                statusText.text = "MSG RECEIVED: " + msg[1].ToString() +
+                statusText.text = msg[1].ToString() +
                     msg[2].ToString() + msg[3].ToString() + msg[4].ToString() +
                     msg[5].ToString() + msg[6].ToString() + msg[7].ToString();
                 sizeOfMessage.text = "MSG SIZE: " + msg.Length;
 
-                // Apply corrections
+                // Apply corrections and brake warning
                 correctPitch = -1 * (msg[3] - 127) * 3;
                 correctRoll = Mathf.Abs(msg[1] - 127) * 2;
+                if (msg[5] > 200)
+                {
+                    brakeWarning.text = "WARNING: TURN BRAKE";
+                    brakeWarning.color = new Color(255, 0, 0, 255);
+                }
 
                 // Log data to dynamic array
                 rowDataTemp = new string[rowDataSize];
